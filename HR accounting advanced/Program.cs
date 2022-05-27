@@ -47,13 +47,13 @@ namespace HR_accounting_advanced
                         switch (index)
                         {
                             case 0:
-                                AddDossier(ref dossier);
+                                AddDossier(dossier);
                                 break;
                             case 1:
-                                DeleteDossier(ref dossier);
+                                DeleteDossier(dossier);
                                 break;
                             case 2:
-                                ListOfDossiers(ref dossier);
+                                ListOfDossiers(dossier);
                                 Clear();
                                 break;
                             case 3:
@@ -64,7 +64,7 @@ namespace HR_accounting_advanced
                 }
             }
         }
-        static void AddDossier (ref Dictionary<string,string> dos)
+        static void AddDossier (Dictionary<string,string> dos)
         {
             Console.Write("Введите ФИО сотрудника: ");
             string fio = Convert.ToString(Console.ReadLine());
@@ -77,19 +77,18 @@ namespace HR_accounting_advanced
             Console.WriteLine($"Вы добавели {fio} - {post}");
             Clear();
         }
-        static void DeleteDossier (ref Dictionary<string,string> dos)
+        static void DeleteDossier (Dictionary<string,string> dos)
         {
-            ListOfDossiers(ref dos);
+            ListOfDossiers(dos);
 
-            Console.WriteLine("\nВведите ФМО сотрудника\n");
-            string fio = Convert.ToString(Console.ReadLine());
+            Console.WriteLine("\nВведите номер сотрудника\n");
+            byte namberDossier = byte.Parse(Console.ReadLine());
 
-            dos.Remove(fio);
 
-            ListOfDossiers(ref dos);
+            ListOfDossiers(dos);
             Clear();
         }
-        static void ListOfDossiers(ref Dictionary<string,string> dos)
+        static void ListOfDossiers(Dictionary<string,string> dos)
         {
             byte caunt = 1;
             Console.WriteLine("\nСписок всех сотрудников");
