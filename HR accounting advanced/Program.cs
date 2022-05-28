@@ -7,10 +7,8 @@ namespace HR_accounting_advanced
     {
         static void Main(string[] args)
         {
-            Dictionary<string, string> dossier = new Dictionary<string, string>();
-            dossier.Add("Попов Роман Аркадьевич", "Токарь");
-            dossier.Add("Черний Иван Сергеевич", "Программист");
-            dossier.Add("Черний Алина Вячеславовна", "Молодая мама");
+            List<string> fio = new List<string> { "Попов Роман Аркадьевич", "Черний Иван Сергеевич", "Черний Алина Вячеславовна" };
+            List<string> post = new List<string> { "Токарь", "Программист", "Молодая мама" };
             string[] menu = { "Добавить", "Удалить", "Вывести все досье", "Выход" };
             int index = 0;
             bool launchingTheProgram = true;
@@ -47,14 +45,13 @@ namespace HR_accounting_advanced
                         switch (index)
                         {
                             case 0:
-                                AddDossier(dossier);
+                                AddDossier(fio, post);
                                 break;
                             case 1:
-                                DeleteDossier(dossier);
+                                DeleteDossier(fio, post);
                                 break;
                             case 2:
-                                ListOfDossiers(dossier);
-                                Clear();
+                                ListOfDossiers(fio, post);
                                 break;
                             case 3:
                                 Exit(launchingTheProgram);
@@ -64,39 +61,40 @@ namespace HR_accounting_advanced
                 }
             }
         }
-        static void AddDossier (Dictionary<string,string> dos)
+        static void AddDossier (List<string> fio, List<string> post)
         {
             Console.Write("Введите ФИО сотрудника: ");
-            string fio = Convert.ToString(Console.ReadLine());
+            string addFIO = Convert.ToString(Console.ReadLine());
 
             Console.Write("Введите должность сотрудника: ");
-            string post = Convert.ToString(Console.ReadLine());
+            string addPost = Convert.ToString(Console.ReadLine());
 
-            dos.Add(fio, post);
-
-            Console.WriteLine($"Вы добавели {fio} - {post}");
+            fio.Add(addFIO);
+            post.Add(addPost);
+            Console.WriteLine($"Вы добавели {addFIO} - {addPost}");
             Clear();
         }
-        static void DeleteDossier (Dictionary<string,string> dos)
+        static void DeleteDossier (List<string> fio, List<string> post)
         {
-            ListOfDossiers(dos);
+            ListOfDossiers(fio,post, 0);
 
             Console.WriteLine("\nВведите номер сотрудника\n");
-            byte namberDossier = byte.Parse(Console.ReadLine());
-
-
-            ListOfDossiers(dos);
-            Clear();
+            byte namberDelete = byte.Parse(Console.ReadLine());
+            fio.RemoveAt(namberDelete - 1);
+            post.RemoveAt(namberDelete - 1);
+            ListOfDossiers(fio,post);
         }
-        static void ListOfDossiers(Dictionary<string,string> dos)
+        static void ListOfDossiers(List<string> fio, List<string> post, int positionClear = 1)
         {
-            byte caunt = 1;
             Console.WriteLine("\nСписок всех сотрудников");
 
-            foreach (var item in dos)
+            for (int i = 0; i < fio.Count; i++)
             {
-                    Console.WriteLine($"{caunt}) {item.Key} - {item.Value}");
-                caunt += 1;
+                    Console.WriteLine($"{i+1}) {fio[i]} - {post[i]}");
+            }
+            if(positionClear == 1)
+            {
+                Clear();
             }
         }
         static void Exit (bool start)
@@ -107,8 +105,13 @@ namespace HR_accounting_advanced
         }
         static void Clear()
         {
+            Console.SetCursorPosition(0, 5);
             Console.ReadKey();
-            Console.Clear();
+
+            for (int i = 0; i < 15; i++)
+            {
+                Console.WriteLine("\t\t\t\t\t\t\t\t");
+            }
         }
     }
 }
