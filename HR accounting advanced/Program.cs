@@ -13,7 +13,7 @@ namespace HR_accounting_advanced
             int index = 0;
             bool launchingTheProgram = true;
 
-            while (launchingTheProgram == true)
+            while (launchingTheProgram)
             {
                 Console.SetCursorPosition(0, 0);
                 Console.ResetColor();
@@ -54,7 +54,7 @@ namespace HR_accounting_advanced
                                 ListOfDossiers(fio, post);
                                 break;
                             case 3:
-                                Exit(launchingTheProgram);
+                                launchingTheProgram = !launchingTheProgram;
                                 break;
                         }
                         break;
@@ -97,18 +97,14 @@ namespace HR_accounting_advanced
                 Clear();
             }
         }
-        static void Exit (bool start)
-        {
-            Console.Clear();
-            start = false;
-            Environment.Exit(0);
-        }
         static void Clear()
         {
-            Console.SetCursorPosition(0, 5);
+            byte indentDown = 5;
+            byte cleaningTheConsole = 15;
+            Console.SetCursorPosition(0, indentDown);
             Console.ReadKey();
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < cleaningTheConsole; i++)
             {
                 Console.WriteLine("\t\t\t\t\t\t\t\t");
             }
